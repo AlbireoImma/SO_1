@@ -70,11 +70,19 @@ void print_pel(peliculas *pel){
   return;
 }
 
-void crear_dir(char *name){
+void crear_dir(char *genero,char *anio,char *nombre_archivo){
+  char path[700] = "";
+  strncat(path,genero,strlen(genero));
+  strncat(path,"/",1);
+  strncat(path,anio,strlen(anio));
   #ifdef __linux__
-    mkdir(name, 0777);
+    mkdir(path, 0777);
+    strncat(path,nombre_archivo,strlen(nombre_archivo));
+    rename(nombre_archivo,path);
   #else
-    _mkdir(name);
+    _mkdir(path);
+    strncat(path,nombre_archivo,strlen(nombre_archivo));
+    _rename(nombre_archivo,path);
   #endif
 }
 
