@@ -70,4 +70,12 @@ void print_pel(peliculas *pel){
   return;
 }
 
+void crear_dir(char *name){
+  #ifdef __linux__
+    mkdir(name, 0777);
+  #else
+    _mkdir(name);
+  #endif
+}
+
 void crear_generos(){}
