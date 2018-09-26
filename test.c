@@ -6,6 +6,8 @@
 #include "files_man.h"
 
 int main(void) {
-  printf("Cantidad de archivos en Raiz: %d\n", cant_txt("."));
+  peliculas *pel = obtener_peliculas(".");
+  printf("Cantidad de archivos en Raiz: %d\n", pel->cant_peliculas);
+  print_pel(pel);
   return 0;
 }
