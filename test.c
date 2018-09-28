@@ -13,17 +13,15 @@ int main(void) {
         int Flag = pel->cant_peliculas;
         while (Flag > 0) {
           organizar(pel);
-          // printf("FREE!!\n");
-          // free_peliculas(pel);
+          free_peliculas(pel);
           if (Flag > 0) {
             pel = obtener_peliculas(".");
             Flag = pel->cant_peliculas;
           }
         }
-        // free_peliculas(pel);
+        free_peliculas(pel);
         clock_t end = clock();
         double time_s = (double)(end - begin) / CLOCKS_PER_SEC;
         printf("Archivos organizados en: %lf segundos\n",time_s);
-        listdir(".",4);
         return 0;
 }
