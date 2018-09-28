@@ -11,12 +11,15 @@ typedef struct
 } peliculas;
 
 void free_peliculas(peliculas *pel){
-  int i;
-  for (i = 0; i < pel->cant_peliculas; i++) {
-    free(pel->peliculas[i]);
-  }
-  free(pel->peliculas);
-  free(pel);
+        int i;
+        for (i = 0; i < pel->cant_peliculas; i++) {
+                //   printf("Eliminando Array...\n");
+                //   printf("Array %s %p\n",pel->peliculas[i],&pel->peliculas[i]);
+                free((void *)pel->peliculas[i]);
+                //   printf("Array eliminado!!\n");
+        }
+        free(pel->peliculas);
+        free(pel);
 }
 
 peliculas *obtener_peliculas(char *nombre_dir){
@@ -118,4 +121,34 @@ int organizar(peliculas *pel){
                 mov_arch(genero,anio,pel->peliculas[i]);
         }
         return 1;
+}
+
+void ver_arbol(char *nombre_dir){
+
+}
+
+void listdir(const char *name, int indentar)
+{
+        DIR *dir;
+        struct dirent *entry;
+
+        if (!(dir = opendir(name)))
+                return;
+
+        while ((entry = readdir(dir)) != NULL) {
+                if (strcmp(entry->d_name, "test.c") == 0 || strcmp(entry->d_name, "test") == 0 || strcmp(entry->d_name, "files_man.h") == 0) {
+                        continue;
+                } else if (entry->d_type == DT_DIR) {
+                        char path[257];
+                        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0 || strcmp(entry->d_name, ".git") == 0){
+                                continue;
+                              }
+                        snprintf(path, sizeof(path), "%s/%s", name, entry->d_name);
+                        printf("%*s[%s]\n", indentar, "", entry->d_name);
+                        listdir(path, indentar + 2);
+                } else {
+                        printf("%*s- %s\n", indentar, "", entry->d_name);
+                }
+        }
+        closedir(dir);
 }
