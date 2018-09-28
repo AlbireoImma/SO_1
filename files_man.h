@@ -27,7 +27,6 @@ peliculas *obtener_peliculas(char *nombre_dir){
         int archivos = 0;
         struct dirent *de;
         DIR *dir = opendir(nombre_dir);
-
         if (dir == NULL) {
                 // Error al abrir el directorio
                 peliculas *pel = (peliculas *)calloc(1,sizeof(peliculas));
@@ -37,7 +36,7 @@ peliculas *obtener_peliculas(char *nombre_dir){
 
         while ((de = readdir(dir)) != NULL) {
                 // Que no sea ninguno de los archivos usados por el programa
-                if (strcmp(de->d_name,"test.c") == 0 || strcmp(de->d_name,"test") == 0 || strcmp(de->d_name,"files_man.h") == 0 || strcmp(de->d_name,"lista.h") == 0) {
+                if (strcmp(de->d_name,"peliculas.c") == 0 || strcmp(de->d_name,"peliculas.o") == 0 || strcmp(de->d_name,"peliculas") == 0 || strcmp(de->d_name,"files_man.h") == 0 || strcmp(de->d_name,"lista.h") == 0 || strcmp(de->d_name,"makefile") == 0) {
                         continue;
                 } else {
                         if (de->d_type == 8) {
@@ -63,7 +62,7 @@ peliculas *obtener_peliculas(char *nombre_dir){
         i = 0;
         while ((de = readdir(dir)) != NULL) {
                 // Que no sea ninguno de los archivos usados por el programa
-                if (strcmp(de->d_name,"test.c") == 0 || strcmp(de->d_name,"test") == 0 || strcmp(de->d_name,"files_man.h") == 0 || strcmp(de->d_name,"lista.h") == 0) {
+                if (strcmp(de->d_name,"peliculas.c") == 0 || strcmp(de->d_name,"peliculas.o") == 0 || strcmp(de->d_name,"peliculas") == 0 || strcmp(de->d_name,"files_man.h") == 0 || strcmp(de->d_name,"lista.h") == 0 || strcmp(de->d_name,"makefile") == 0) {
                         continue;
                 } else {
                         if (de->d_type == 8) {
@@ -269,7 +268,7 @@ void navegador(char *raiz){
                         toHome(lista);
                         for (i = 0; i < getlarge(lista); i++) {
                                 if (strcmp(getval(lista),"..") == 0) {
-                                        printf("====>  %s\n",pel_genre);
+                                        printf("====>  %s  ",pel_genre);
                                         printf("===>  %s\n",pel_year);
                                         printf("[%d] ----> Volver a la carpeta anterior\n",i+1);
                                 } else {
@@ -313,17 +312,16 @@ void navegador(char *raiz){
                                         next(lista);
                                 }
                                 strcpy(filepath,getval(lista));
-                                // for (i = 0; i < 4; i++) {
-                                //   filepath[strlen(filepath)-i-1] = 0;
-                                // }
+                                i = 0;
+                                while(filepath[i] != '\0')
+                                {
+                                        i++;
+                                }
+                                filepath[i-4] = '\0';
                                 printf("\n");
-                                // filepath[strlen(filepath)-1] = 0;
-                                // filepath[strlen(filepath)-2] = 0;
-                                // filepath[strlen(filepath)-3] = 0;
-                                // filepath[strlen(filepath)-4] = 0;
                                 printf("=> %s\n",filepath);
-                                printf("=> %s\n",pel_genre);
-                                printf("=> %s\n",pel_year);
+                                printf("%s\n",pel_genre);
+                                printf("%s\n",pel_year);
                                 printf("\n");
                                 closedir(dir);
                                 erase_lista(lista);
