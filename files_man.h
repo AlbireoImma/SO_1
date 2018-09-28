@@ -129,6 +129,7 @@ void navegador(char *raiz){
         int Flag_Salida = 0;
         int opcion;
         int i;
+        char filepath[500];
         char *path = (char *)malloc(100*sizeof(char));
         char *pel_year = (char *)malloc(100*sizeof(char));
         char *pel_genre = (char *)malloc(100*sizeof(char));
@@ -287,27 +288,47 @@ void navegador(char *raiz){
                                 printf("\n");
                         }
                         if (opcion == 0) {
-                          closedir(dir);
-                          erase_lista(lista);
-                          free((void *)lista);
-                          free((void *)pel_name);
-                          free((void *)pel_genre);
-                          free((void *)pel_year);
-                          free((void *)path);
-                          return;
+                                closedir(dir);
+                                erase_lista(lista);
+                                free((void *)lista);
+                                free((void *)pel_name);
+                                free((void *)pel_genre);
+                                free((void *)pel_year);
+                                free((void *)path);
+                                return;
                         } else if (opcion == 1) {
-                          Flag_Archivo = 0;
-                          Flag_Anio = 1;
-                          strcpy(path,".");
-                          strncat(path,"/",1);
-                          strncat(path,pel_genre,strlen(pel_genre));
-                          strncat(path,"/",1);
-                          closedir(dir);
-                          erase_lista(lista);
-                          free((void *)lista);
-                          lista = crear_lista();
+                                Flag_Archivo = 0;
+                                Flag_Anio = 1;
+                                strcpy(path,".");
+                                strncat(path,"/",1);
+                                strncat(path,pel_genre,strlen(pel_genre));
+                                strncat(path,"/",1);
+                                closedir(dir);
+                                erase_lista(lista);
+                                free((void *)lista);
+                                lista = crear_lista();
                         } else {
-
+                                toHome(lista);
+                                for (i = 0; i < (opcion-1); i++) {
+                                        next(lista);
+                                }
+                                strcpy(filepath,getval(lista));
+                                // for (i = 0; i < 4; i++) {
+                                //   filepath[strlen(filepath)-i-1] = 0;
+                                // }
+                                printf("\n");
+                                // filepath[strlen(filepath)-1] = 0;
+                                // filepath[strlen(filepath)-2] = 0;
+                                // filepath[strlen(filepath)-3] = 0;
+                                // filepath[strlen(filepath)-4] = 0;
+                                printf("=> %s\n",filepath);
+                                printf("=> %s\n",pel_genre);
+                                printf("=> %s\n",pel_year);
+                                printf("\n");
+                                closedir(dir);
+                                erase_lista(lista);
+                                free((void *)lista);
+                                lista = crear_lista();
                         }
                 }
         }
