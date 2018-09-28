@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/sendfile.h>
+#include "lista.h"
 
 typedef struct
 {
@@ -36,7 +37,7 @@ peliculas *obtener_peliculas(char *nombre_dir){
 
         while ((de = readdir(dir)) != NULL) {
                 // Que no sea ninguno de los archivos usados por el programa
-                if (strcmp(de->d_name,"test.c") == 0 || strcmp(de->d_name,"test") == 0 || strcmp(de->d_name,"files_man.h") == 0) {
+                if (strcmp(de->d_name,"test.c") == 0 || strcmp(de->d_name,"test") == 0 || strcmp(de->d_name,"files_man.h") == 0 || strcmp(de->d_name,"lista.h") == 0) {
                         continue;
                 } else {
                         if (de->d_type == 8) {
@@ -62,7 +63,7 @@ peliculas *obtener_peliculas(char *nombre_dir){
         i = 0;
         while ((de = readdir(dir)) != NULL) {
                 // Que no sea ninguno de los archivos usados por el programa
-                if (strcmp(de->d_name,"test.c") == 0 || strcmp(de->d_name,"test") == 0 || strcmp(de->d_name,"files_man.h") == 0) {
+                if (strcmp(de->d_name,"test.c") == 0 || strcmp(de->d_name,"test") == 0 || strcmp(de->d_name,"files_man.h") == 0 || strcmp(de->d_name,"lista.h") == 0) {
                         continue;
                 } else {
                         if (de->d_type == 8) {
@@ -121,8 +122,115 @@ int organizar(peliculas *pel){
         return 1;
 }
 
-void navegador(char *nombre_dir){
-        int Flag_Raiz;
-        int Flag_Anio;
-        int Flag_Archivo;
+void navegador(char *raiz){
+        int Flag_Raiz = 1;
+        int Flag_Anio = 0;
+        int Flag_Archivo = 0;
+        int opcion;
+        int i;
+        char *path = (char *)malloc(100*sizeof(char));
+        char *pel_year = (char *)malloc(100*sizeof(char));
+        char *pel_genre = (char *)malloc(100*sizeof(char));
+        char *pel_name = (char *)malloc(100*sizeof(char));
+        Tlist *lista = crear_lista();
+        struct dirent *de;
+        DIR *dir;
+        while (Flag_Salida != 1) {
+                if (Flag_Raiz == 1) {
+                        dir = opendir(raiz);
+                        while ((de = readdir(dir)) != NULL) {
+                                if (de->d_type == 4) {
+                                        if (strcmp(de->d_name,".") == 0 || strcmp(de->d_name,"..") == 0 || strcmp(de->d_name,".git") == 0) {
+                                                continue;
+                                        } else {
+                                                insertar(de->d_name,lista);
+                                        }
+                                }
+                        }
+                        toHome(lista);
+                        printf("==============  Generos  ==============\n");
+                        for (i = 0; i < getlarge(lista); i++) {
+                                printf("[%d] -> %s\n",i+1,getval(lista));
+                                next(lista);
+                        }
+                        printf("[0] -> Salir\n");
+                        printf("Seleccione un genero mediante opcion numerica: ");
+                        scanf("%d",&opcion);
+                        if (opcion == 0) {
+                                closedir(dir);
+                                erase_lista(lista);
+                                free((void *)pel_name);
+                                free((void *)pel_genre);
+                                free((void *)pel_year);
+                                free((void *)path);
+                                return;
+                        } else if (opcion > 0 && opcion <= getlarge(lista)) {
+                                toHome(lista);
+                                for (i = 0; i < (opcion-1); i++) {
+                                        next(lista);
+                                }
+                                strcpy(path,getval(lista));
+                                strcpy(pel_genre,getval(lista));
+                                erase_lista(lista);
+                                lista = crear_lista();
+                                Flag_Raiz = 0;
+                                Flag_Anio = 1;
+                                closedir(dir);
+                        }
+                } else if (Flag_Anio == 1) {
+                        dir = opendir(path);
+                        while ((de = readdir(dir)) != NULL) {
+                                if (de->d_type == 4) {
+                                        if (strcmp(de->d_name,".") == 0 || strcmp(de->d_name,".git") == 0) {
+                                                continue;
+                                        } else {
+                                                insertar(de->d_name,lista);
+                                        }
+                                }
+                        }
+                        toHome(lista);
+                        for (i = 0; i < getlarge(lista); i++) {
+                                if (strcmp(getval(lista),"..") == 0) {
+                                        printf("==============  %s  ==============\n",pel_genre);
+                                        printf("[%d] -> Volver a Generos\n",i+1);
+                                } else {
+                                        printf("[%d] -> %s\n",i+1,getval(lista));
+                                }
+                                next(lista);
+                        }
+                        printf("[0] -> Salir\n");
+                        printf("Seleccione un anio mediante opcion numerica: ",164); // Modificar codigo para colocar la eñe
+                        scanf("%d",&opcion);
+                        if (opcion == 0) {
+                                closedir(dir);
+                                erase_lista(lista);
+                                free((void *)pel_name);
+                                free((void *)pel_genre);
+                                free((void *)pel_year);
+                                free((void *)path);
+                                return;
+                        } else if (opcion > 0 && opcion <= getlarge(lista)) {
+                                if (opcion == 1) {
+                                        Flag_Raiz = 1;
+                                        Flag_Anio = 0;
+                                        closedir(dir);
+                                        erase_lista(lista);
+                                        lista = crear_lista();
+                                } else {
+                                        toHome(lista);
+                                        for (i = 0; i < (opcion-1); i++) {
+                                                next(lista);
+                                        }
+                                        strcpy(path,getval(lista));
+                                        erase_lista(lista);
+                                        lista = crear_lista();
+                                        Flag_Raiz = 0;
+                                        Flag_Anio = 1;
+                                        closedir(dir);
+                                }
+                        }
+                } else if (Flag_Archivo == 1) {
+                        /* code */
+                }
+        }
 }
