@@ -66,7 +66,7 @@ peliculas *obtener_peliculas(char *nombre_dir){
                         continue;
                 } else {
                         if (de->d_type == 8) {
-                                pel->peliculas[i]=de->d_name;
+                                strcpy(pel->peliculas[i],de->d_name);
                                 i++;
                         }
                 }
@@ -107,48 +107,22 @@ int organizar(peliculas *pel){
         char genero[250];
         char anio[250];
         for (i = 0; i < pel->cant_peliculas; i++) {
-                //printf("Abriendo: %s\n",pel->peliculas[i]);
                 file = fopen(pel->peliculas[i],"r");
                 if (file == NULL) {
                         return -1;
                 }
-                //printf("Archivo abierto\n");
-                fscanf(file, "%s",genero);
-                //printf("genero --> %s\n",genero );
-                fscanf(file, "%s",anio);
-                //printf("anio --> %s\n",anio );
+                fgets(genero,250,file);
+                genero[strlen(genero)-1]=0;
+                fgets(anio,250,file);
+                anio[strlen(anio)-1]=0;
                 fclose(file);
                 mov_arch(genero,anio,pel->peliculas[i]);
         }
         return 1;
 }
 
-void ver_arbol(char *nombre_dir){
-
-}
-
-void listdir(const char *name, int indentar)
-{
-        DIR *dir;
-        struct dirent *entry;
-
-        if (!(dir = opendir(name)))
-                return;
-
-        while ((entry = readdir(dir)) != NULL) {
-                if (strcmp(entry->d_name, "test.c") == 0 || strcmp(entry->d_name, "test") == 0 || strcmp(entry->d_name, "files_man.h") == 0) {
-                        continue;
-                } else if (entry->d_type == DT_DIR) {
-                        char path[257];
-                        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0 || strcmp(entry->d_name, ".git") == 0){
-                                continue;
-                              }
-                        snprintf(path, sizeof(path), "%s/%s", name, entry->d_name);
-                        printf("%*s[%s]\n", indentar, "", entry->d_name);
-                        listdir(path, indentar + 2);
-                } else {
-                        printf("%*s- %s\n", indentar, "", entry->d_name);
-                }
-        }
-        closedir(dir);
+void navegador(char *nombre_dir){
+        int Flag_Raiz;
+        int Flag_Anio;
+        int Flag_Archivo;
 }
