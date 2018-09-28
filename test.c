@@ -11,10 +11,12 @@ int main(void) {
         peliculas *pel = obtener_peliculas(".");
         printf("Cantidad de archivos en Raiz: %d\n", pel->cant_peliculas);
         int Flag = pel->cant_peliculas;
+        free_peliculas(pel);
         while (Flag > 0) {
           pel = obtener_peliculas(".");
           organizar(pel);
           Flag = pel->cant_peliculas;
+          free_peliculas(pel);
         }
         clock_t end = clock();
         double time_s = (double)(end - begin) / CLOCKS_PER_SEC;
