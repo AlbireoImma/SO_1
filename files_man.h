@@ -126,6 +126,7 @@ void navegador(char *raiz){
         int Flag_Raiz = 1;
         int Flag_Anio = 0;
         int Flag_Archivo = 0;
+        int Flag_Salida = 0;
         int opcion;
         int i;
         char *path = (char *)malloc(100*sizeof(char));
@@ -148,14 +149,21 @@ void navegador(char *raiz){
                                 }
                         }
                         toHome(lista);
-                        printf("==============  Generos  ==============\n");
+                        printf("====>  Generos\n");
                         for (i = 0; i < getlarge(lista); i++) {
-                                printf("[%d] -> %s\n",i+1,getval(lista));
+                                printf("[%d] ----> %s\n",i+1,getval(lista));
                                 next(lista);
                         }
-                        printf("[0] -> Salir\n");
+                        printf("[0] ----> Salir\n");
+                        printf("\n");
                         printf("Seleccione un genero mediante opcion numerica: ");
                         scanf("%d",&opcion);
+                        printf("\n");
+                        while (opcion < 0 || opcion > getlarge(lista)) {
+                                printf("Seleccione una opcion valida: "); // Modificar codigo para colocar la eñe
+                                scanf("%d",&opcion);
+                                printf("\n");
+                        }
                         if (opcion == 0) {
                                 closedir(dir);
                                 erase_lista(lista);
@@ -163,6 +171,7 @@ void navegador(char *raiz){
                                 free((void *)pel_genre);
                                 free((void *)pel_year);
                                 free((void *)path);
+                                free((void *)lista);
                                 return;
                         } else if (opcion > 0 && opcion <= getlarge(lista)) {
                                 toHome(lista);
@@ -172,6 +181,7 @@ void navegador(char *raiz){
                                 strcpy(path,getval(lista));
                                 strcpy(pel_genre,getval(lista));
                                 erase_lista(lista);
+                                free((void *)lista);
                                 lista = crear_lista();
                                 Flag_Raiz = 0;
                                 Flag_Anio = 1;
@@ -191,19 +201,27 @@ void navegador(char *raiz){
                         toHome(lista);
                         for (i = 0; i < getlarge(lista); i++) {
                                 if (strcmp(getval(lista),"..") == 0) {
-                                        printf("==============  %s  ==============\n",pel_genre);
-                                        printf("[%d] -> Volver a Generos\n",i+1);
+                                        printf("====>  %s\n",pel_genre);
+                                        printf("[%d] ----> Volver a Generos\n",i+1);
                                 } else {
-                                        printf("[%d] -> %s\n",i+1,getval(lista));
+                                        printf("[%d] ----> %s\n",i+1,getval(lista));
                                 }
                                 next(lista);
                         }
-                        printf("[0] -> Salir\n");
-                        printf("Seleccione un anio mediante opcion numerica: ",164); // Modificar codigo para colocar la eñe
+                        printf("[0] ----> Salir\n");
+                        printf("\n");
+                        printf("Seleccione un anio mediante opcion numerica: "); // Modificar codigo para colocar la eñe
                         scanf("%d",&opcion);
+                        printf("\n");
+                        while (opcion < 0 || opcion > getlarge(lista)) {
+                                printf("Seleccione una opcion valida: "); // Modificar codigo para colocar la eñe
+                                scanf("%d",&opcion);
+                                printf("\n");
+                        }
                         if (opcion == 0) {
                                 closedir(dir);
                                 erase_lista(lista);
+                                free((void *)lista);
                                 free((void *)pel_name);
                                 free((void *)pel_genre);
                                 free((void *)pel_year);
@@ -215,22 +233,58 @@ void navegador(char *raiz){
                                         Flag_Anio = 0;
                                         closedir(dir);
                                         erase_lista(lista);
+                                        free((void *)lista);
                                         lista = crear_lista();
                                 } else {
                                         toHome(lista);
                                         for (i = 0; i < (opcion-1); i++) {
                                                 next(lista);
                                         }
-                                        strcpy(path,getval(lista));
+                                        strcpy(pel_year,getval(lista));
+                                        strncat(path,"/",1);
+                                        strncat(path,pel_year,strlen(pel_year));
+                                        strncat(path,"/",1);
                                         erase_lista(lista);
+                                        free((void *)lista);
                                         lista = crear_lista();
-                                        Flag_Raiz = 0;
-                                        Flag_Anio = 1;
+                                        Flag_Archivo = 1;
+                                        Flag_Anio = 0;
                                         closedir(dir);
                                 }
                         }
                 } else if (Flag_Archivo == 1) {
-                        /* code */
+                        dir = opendir(path);
+                        while ((de = readdir(dir)) != NULL) {
+                                if (de->d_type == 8 || de->d_type == 4) {
+                                        if (strcmp(de->d_name,".") == 0 || strcmp(de->d_name,".git") == 0) {
+                                                continue;
+                                        } else {
+                                                insertar(de->d_name,lista);
+                                        }
+                                }
+                        }
+                        toHome(lista);
+                        for (i = 0; i < getlarge(lista); i++) {
+                                if (strcmp(getval(lista),"..") == 0) {
+                                        printf("====>  %s\n",pel_genre);
+                                        printf("===>  %s\n",pel_year);
+                                        printf("[%d] ----> Volver a la carpeta anterior\n",i+1);
+                                } else {
+                                        printf("[%d] ----> %s\n",i+1,getval(lista));
+                                }
+                                next(lista);
+                        }
+                        printf("[0] ----> Salir\n");
+                        printf("\n");
+                        printf("Seleccione una pelicula mediante opcion numerica: "); // Modificar codigo para colocar la eñe
+                        scanf("%d",&opcion);
+                        printf("\n");
+                        while (opcion < 0 || opcion > getlarge(lista)) {
+                                printf("Seleccione una opcion valida: "); // Modificar codigo para colocar la eñe
+                                scanf("%d",&opcion);
+                                printf("\n");
+                        }
+                        return;
                 }
         }
 }
