@@ -235,6 +235,8 @@ void navegador(char *raiz){
                                         erase_lista(lista);
                                         free((void *)lista);
                                         lista = crear_lista();
+                                        strcpy(path,".");
+                                        strncat(path,pel_genre,strlen(pel_genre));
                                 } else {
                                         toHome(lista);
                                         for (i = 0; i < (opcion-1); i++) {
@@ -284,7 +286,29 @@ void navegador(char *raiz){
                                 scanf("%d",&opcion);
                                 printf("\n");
                         }
-                        return;
+                        if (opcion == 0) {
+                          closedir(dir);
+                          erase_lista(lista);
+                          free((void *)lista);
+                          free((void *)pel_name);
+                          free((void *)pel_genre);
+                          free((void *)pel_year);
+                          free((void *)path);
+                          return;
+                        } else if (opcion == 1) {
+                          Flag_Archivo = 0;
+                          Flag_Anio = 1;
+                          strcpy(path,".");
+                          strncat(path,"/",1);
+                          strncat(path,pel_genre,strlen(pel_genre));
+                          strncat(path,"/",1);
+                          closedir(dir);
+                          erase_lista(lista);
+                          free((void *)lista);
+                          lista = crear_lista();
+                        } else {
+
+                        }
                 }
         }
 }
