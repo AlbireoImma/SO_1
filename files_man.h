@@ -10,6 +10,15 @@ typedef struct
         int cant_peliculas;
 } peliculas;
 
+void free_peliculas(peliculas *pel){
+  int i;
+  for (i = 0; i < pel->cant_peliculas; i++) {
+    free(pel->peliculas[i]);
+  }
+  free(pel->peliculas);
+  free(pel);
+}
+
 peliculas *obtener_peliculas(char *nombre_dir){
         int archivos = 0;
         struct dirent *de;
@@ -38,7 +47,7 @@ peliculas *obtener_peliculas(char *nombre_dir){
         pel->cant_peliculas = archivos;
         int i;
         for (i = 0; i < archivos; i++) {
-                pel->peliculas[i] = (char *)calloc(251,sizeof(char));
+                pel->peliculas[i] = (char *)calloc(50,sizeof(char));
         }
         dir = opendir(nombre_dir);
 
@@ -71,7 +80,7 @@ void print_pel(peliculas *pel){
         return;
 }
 
-void crear_dir(char *genero,char *anio,char *nombre_archivo){
+void mov_arch(char *genero,char *anio,char *nombre_archivo){
         char path[700] = "";
   #ifdef __linux__
         strncat(path,genero,strlen(genero));
@@ -106,7 +115,7 @@ int organizar(peliculas *pel){
                 fscanf(file, "%s",anio);
                 //printf("anio --> %s\n",anio );
                 fclose(file);
-                crear_dir(genero,anio,pel->peliculas[i]);
+                mov_arch(genero,anio,pel->peliculas[i]);
         }
         return 1;
 }
