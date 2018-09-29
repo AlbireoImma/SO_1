@@ -7,8 +7,6 @@
 
 int main(void) {
         peliculas *pel = obtener_peliculas(".");
-        printf("Cantidad de archivos en Raiz: %d\n", pel->cant_peliculas);
-        print_pel(pel);
         int Flag = pel->cant_peliculas;
         while (Flag > 0) {
           organizar(pel);
