@@ -2,14 +2,13 @@
 
 **No se consideraron el uso de tildes ni eñes** <br/>
 
-###### Uso makefile
+#### Uso makefile
 
 
 **Generar el ejecutable**<br/>
 
 > $ make
 
-<br/>
 
 **Eliminar archivos innecesarios luego de la ejecución**<br/>
 
@@ -17,7 +16,7 @@
 
 <br/>
 
-###### Ejecucion ejecutable 
+#### Ejecucion ejecutable 
 
 Luego de haber realizado 
 
@@ -25,19 +24,15 @@ Luego de haber realizado
 
 > $ make
 
-<br/>
 
 se debe ejecutar con 
 
-<br/>
-
 > $ ./peliculas
 
-<br/>
 **El programa acepta solo valores numericos en el menu sin importar si se elige una opcion valida o no**
 <br/>
 
-###### Archivos
+#### Archivos
 
 **Los archivos se encuentran en el archivo ```files.zip``` se recomienda que este archivo no se encuentre en la raiz para la correcta ejecucion del programa**
 <br/>
