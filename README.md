@@ -1,5 +1,6 @@
 # Tarea 1 - Sistemas Operativos 2018-2
 
+Enlace github: https://github.com/AlbireoImma/SO_1.git <br/>
 No se consideraron el uso de tildes ni eñes <br/>
 
 #### Uso makefile
@@ -16,16 +17,16 @@ Eliminar archivos innecesarios luego de la ejecución <br/>
 
 <br/>
 
-#### Ejecucion ejecutable 
+#### Ejecucion ejecutable
 
-Luego de haber realizado 
+Luego de haber realizado
 
 <br/>
 
 > $ make
 
 
-se debe ejecutar con 
+se debe ejecutar con
 
 > $ ./peliculas
 
@@ -36,4 +37,3 @@ El programa acepta solo valores numericos en el menu sin importar si se elige un
 
 Los archivos se encuentran en el archivo ```files.zip``` se recomienda que este archivo no se encuentre en la raiz para la correcta ejecucion del programa
 <br/>
-
