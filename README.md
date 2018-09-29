@@ -5,28 +5,39 @@
 ###### Uso makefile
 
 
-**genera el ejecutable**<br/>
+**Generar el ejecutable**<br/>
 
-> ``` $ make ``` 
+> $ make
+
 <br/>
-> ``` $ make clean ```
+
+**Eliminar archivos innecesarios luego de la ejecución**<br/>
+
+> $ make clean
+
 <br/>
 
 ###### Ejecucion ejecutable 
 
 Luego de haber realizado 
+
 <br/>
-> ``` $ make ``` 
+
+> $ make
+
 <br/>
+
 se debe ejecutar con 
+
 <br/>
-> ``` $ ./peliculas ```
+
+> $ ./peliculas
 
 <br/>
 **El programa acepta solo valores numericos en el menu sin importar si se elige una opcion valida o no**
 <br/>
 
-##### Archivos
+###### Archivos
 
 **Los archivos se encuentran en el archivo ```files.zip``` se recomienda que este archivo no se encuentre en la raiz para la correcta ejecucion del programa**
 <br/>
