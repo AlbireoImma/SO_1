@@ -36,7 +36,7 @@ peliculas *obtener_peliculas(char *nombre_dir){
 
         while ((de = readdir(dir)) != NULL) {
                 // Que no sea ninguno de los archivos usados por el programa
-                if (strcmp(de->d_name,"readme.md") == 0 || strcmp(de->d_name,"files.zip") == 0 || strcmp(de->d_name,"peliculas.c") == 0 || strcmp(de->d_name,"peliculas.o") == 0 || strcmp(de->d_name,"peliculas") == 0 || strcmp(de->d_name,"files_man.h") == 0 || strcmp(de->d_name,"lista.h") == 0 || strcmp(de->d_name,"makefile") == 0) {
+                if (strcmp(de->d_name,"README.md") == 0 || strcmp(de->d_name,"files.zip") == 0 || strcmp(de->d_name,"peliculas.c") == 0 || strcmp(de->d_name,"peliculas.o") == 0 || strcmp(de->d_name,"peliculas") == 0 || strcmp(de->d_name,"files_man.h") == 0 || strcmp(de->d_name,"lista.h") == 0 || strcmp(de->d_name,"makefile") == 0) {
                         continue;
                 } else {
                         if (de->d_type == 8) {
@@ -62,7 +62,7 @@ peliculas *obtener_peliculas(char *nombre_dir){
         i = 0;
         while ((de = readdir(dir)) != NULL) {
                 // Que no sea ninguno de los archivos usados por el programa
-                if (strcmp(de->d_name,"readme.md") == 0 || strcmp(de->d_name,"files.zip") == 0 || strcmp(de->d_name,"peliculas.c") == 0 || strcmp(de->d_name,"peliculas.o") == 0 || strcmp(de->d_name,"peliculas") == 0 || strcmp(de->d_name,"files_man.h") == 0 || strcmp(de->d_name,"lista.h") == 0 || strcmp(de->d_name,"makefile") == 0) {
+                if (strcmp(de->d_name,"README.md") == 0 || strcmp(de->d_name,"files.zip") == 0 || strcmp(de->d_name,"peliculas.c") == 0 || strcmp(de->d_name,"peliculas.o") == 0 || strcmp(de->d_name,"peliculas") == 0 || strcmp(de->d_name,"files_man.h") == 0 || strcmp(de->d_name,"lista.h") == 0 || strcmp(de->d_name,"makefile") == 0) {
                         continue;
                 } else {
                         if (de->d_type == 8) {
